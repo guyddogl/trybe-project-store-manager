@@ -9,7 +9,6 @@ const validateProductId = (req, res, next) => {
 
 const validateIfProductExist = async (req, res, next) => {
   const { body } = req;
-  console.log(body);
   const productsInDB = await productsModel.getAllProducts();
   const idsProductsInDB = productsInDB.map((e) => e.id);
   const isInArray = body.every((newProduct) => idsProductsInDB
