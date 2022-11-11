@@ -6,6 +6,13 @@ const getAllSales = async () => {
   return sales;
 };
 
+const addNewSale = async () => {
+  const query = 'INSERT INTO sales (date) VALUES (NOW())';
+  const [{ insertId }] = await connection.execute(query);
+  return { id: insertId };
+};
+
 module.exports = {
   getAllSales,
+  addNewSale,
 };
