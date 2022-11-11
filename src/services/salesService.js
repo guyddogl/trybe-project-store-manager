@@ -5,12 +5,19 @@ const getAllSales = async () => {
   return { status: 200, sales };
 };
 
-const addNewSale = async (name) => {
-  const { id } = await salesModel.addNewSale(name);
-  return { status: 201, newSaleCreated: { id, name } };
+const getSaleById = async (id) => {
+  const sale = await salesModel.getSaleById(id);
+  if (sale.length === 0) return { status: 404, message: 'Sale not found' };
+  return { status: 200, sale };
+};
+
+const addNewSale = async () => {
+  const id = await salesModel.addNewSale();
+  return { status: 201, id };
 };
 
 module.exports = {
   getAllSales,
+  getSaleById,
   addNewSale,
 };

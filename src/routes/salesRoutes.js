@@ -6,6 +6,7 @@ const { validateProductId,
 
 const router = express.Router();
 
+router.get('/:id', salesController.getSaleById);
 router.get('/', salesController.getAllSales);
 router.post('/', validateProductId, validateIfProductExist, 
 validateProductQuantity, salesController.addNewSale);

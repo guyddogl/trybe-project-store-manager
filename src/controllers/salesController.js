@@ -5,13 +5,21 @@ const getAllSales = async (_req, res) => {
   res.status(status).json(sales);
 };
 
+const getSaleById = async (req, res) => {
+  const { id } = req.params;
+  const { status, message, sale } = await salesService.getSaleById(id);
+  if (message) return res.status(status).json({ message });
+  res.status(status).json(sale);
+};
+
 const addNewSale = async (req, res) => {
-  const { name } = req.body;
-  const { status, newSaleCreated } = await salesService.addNewSale(name);
-  res.status(status).json(newSaleCreated);
+  const { body } = req;
+  const { status, sold } = await salesService.addNewSale(body);
+  res.status(status).json(sold);
 };
 
 module.exports = {
   getAllSales,
+  getSaleById,
   addNewSale,
 };

@@ -1,9 +1,27 @@
 const connection = require('../db/connection');
 
 const getAllSales = async () => {
-  const query = 'SELECT * FROM sales';
+  const query = `
+    SELECT sales_products.sale_id as saleId, sales.date, sales_products.product_id as productId, 
+    sales_products.quantity
+    FROM sales_products
+    INNER JOIN sales
+    ON sales.id = sales_products.sale_id
+    ORDER BY sales_products.sale_id, sales_products.product_id;`;
   const [sales] = await connection.execute(query);
   return sales;
+};
+
+const getSaleById = async (id) => {
+  const query = `
+    SELECT sales.date, sales_products.product_id as productId, sales_products.quantity
+    FROM sales_products
+    INNER JOIN sales
+    ON sales.id = sales_products.sale_id
+    WHERE sales_products.sale_id = ?
+    ORDER BY sales_products.sale_id, sales_products.product_id`;
+  const [sale] = await connection.execute(query, [id]);
+  return sale;
 };
 
 const addNewSale = async () => {
@@ -12,7 +30,16 @@ const addNewSale = async () => {
   return { id: insertId };
 };
 
+const addProductsSolds = async (product) => {
+  const { saleId, productId, quantity } = product;
+  const query = 'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)';
+  await connection.execute(query, [saleId, productId, quantity]);
+  return { productId, quantity };
+};
+
 module.exports = {
   getAllSales,
+  getSaleById,
   addNewSale,
+  addProductsSolds,
 };
