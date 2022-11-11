@@ -2,8 +2,7 @@ const productsModel = require('../models/productsModel');
 
 const getAllProducts = async () => {
   const products = await productsModel.getAllProducts();
-  const sorted = products.sort((a, b) => a.id - b.id);
-  return { status: 200, products: sorted };
+  return { status: 200, products };
 };
 
 const getProductById = async (id) => {
