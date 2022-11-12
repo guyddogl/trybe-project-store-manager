@@ -8,14 +8,14 @@ const getAllProducts = async () => {
 
 const getProductById = async (id) => {
   const query = 'SELECT * FROM products WHERE id = ?';
-  const [product] = await connection.execute(query, [id]);
+  const [[product]] = await connection.execute(query, [id]);
   return product;
 };
 
 const addNewProduct = async (name) => {
   const query = 'INSERT INTO products (name) VALUES (?)';
   const [{ insertId }] = await connection.execute(query, [name]);
-  return { id: insertId };
+  return insertId;
 };
 
 const updateProduct = async (id, name) => {
