@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const productsModel = require('../../../src/models/productsModel');
 const productsService = require('../../../src/services/productsService');
-const { allProducts, productFound, productNotFoundMessage, productAdded, } = require('../mocks/productsMocks');
+const { allProducts, productFound, productNotFoundMessage, productAdded, } = require('./mocks/productsServicesMocks');
 
 describe('Testes da camada Product Service', function () {
   describe('Testa a função getAllProducts', function () {

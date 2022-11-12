@@ -13,7 +13,7 @@ describe('Testes da camada Product Model', function () {
       expect(result).to.be.a('array');
     });
     it('Verifica se retorna uma lista de produtos', async function () {
-      sinon.stub(productsModel, 'getAllProducts').resolves(allProducts);
+      sinon.stub(connection, 'execute').resolves(allProducts);
       const result = await productsModel.getAllProducts();
       expect(result).to.deep.equal(allProducts);
     });
@@ -21,17 +21,17 @@ describe('Testes da camada Product Model', function () {
   describe('Testa a função getProductById', function () {
     afterEach(sinon.restore);
     it('Verifica se o retorno da função é um objeto', async function () {
-      sinon.stub(productsModel, 'getProductById').resolves({});
+      sinon.stub(connection, 'execute').resolves([[{}]]);
       const result = await productsModel.getProductById();
       expect(result).to.be.a('object');
     });
     it('Verifica se retorna o produto encontrado', async function () {
-      sinon.stub(productsModel, 'getProductById').resolves(productFound);
+      sinon.stub(connection, 'execute').resolves(productFound);
       const result = await productsModel.getProductById(2);
       expect(result).to.deep.equal(productFound);
     });
     it('Verifica se retorna mensagem de erro quando não encontra o produto', async function () {
-      sinon.stub(productsModel, 'getProductById').resolves(productNotFoundMessage);
+      sinon.stub(connection, 'execute').resolves(productNotFoundMessage);
       const result = await productsModel.getProductById(3);
       expect(result.message).to.deep.equal(productNotFoundMessage.message);
     });
@@ -39,7 +39,7 @@ describe('Testes da camada Product Model', function () {
   describe('Testa a função addNewProduct', function () {
     afterEach(sinon.restore);
     it('Verifica se o retorno da função é um objeto', async function () {
-      sinon.stub(productsModel, 'addNewProduct').resolves({});
+      sinon.stub(connection, 'execute').resolves([{}]);
       const result = await productsModel.addNewProduct();
       expect(result).to.be.a('object');
     });
@@ -53,7 +53,7 @@ describe('Testes da camada Product Model', function () {
   describe('Testa a função updateProduct', function () {
     afterEach(sinon.restore);
     it('Verifica se é possível atualizar um produto', async function () {
-      sinon.stub(productsModel, 'updateProduct').resolves(true);
+      sinon.stub(connection, 'execute').resolves(true);
       const result = await productsModel.updateProduct(1, 'Martelo');
       expect(result).to.be.equal(true);
     });
@@ -61,7 +61,7 @@ describe('Testes da camada Product Model', function () {
   describe('Testa a função deleteProduct', function () {
     afterEach(sinon.restore);
     it('Verifica se é possível atualizar um produto', async function () {
-      sinon.stub(productsModel, 'deleteProduct').resolves(true);
+      sinon.stub(connection, 'execute').resolves(true);
       const result = await productsModel.deleteProduct(1);
       expect(result).to.be.equal(true);
     });
@@ -69,7 +69,7 @@ describe('Testes da camada Product Model', function () {
   describe('Testa a função searchProducts', function () {
     afterEach(sinon.restore);
     it('Verifica se é possível atualizar um produto', async function () {
-      sinon.stub(productsModel, 'searchProducts').resolves(productFound);
+      sinon.stub(connection, 'execute').resolves(productFound);
       const result = await productsModel.searchProducts('Machado');
       expect(result.products[0].name).to.be.equal('Machado Leviatã');
     });
