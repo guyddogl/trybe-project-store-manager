@@ -11,8 +11,8 @@ const getSaleById = async (id) => {
   return { status: 200, sale };
 };
 
-const addNewSale = async () => {
-  const id = await salesModel.addNewSale();
+const addNewSale = async (sale) => {
+  const { id } = await salesModel.addNewSale(sale);
   return { status: 201, id };
 };
 
