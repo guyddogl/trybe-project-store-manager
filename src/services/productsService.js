@@ -7,18 +7,18 @@ const getAllProducts = async () => {
 
 const getProductById = async (id) => {
   const product = await productsModel.getProductById(id);
-  if (product.length === 0) return { status: 404, message: 'Product not found' };
-  return { status: 200, product: product[0] };
+  if (!product) return { status: 404, message: 'Product not found' };
+  return { status: 200, product };
 };
 
 const addNewProduct = async (name) => {
-  const { id } = await productsModel.addNewProduct(name);
-  return { status: 201, newProductCreated: { id, name } };
+  const insertId = await productsModel.addNewProduct(name);
+  return { status: 201, newProductCreated: { id: insertId, name } };
 };
 
 const updateProduct = async (id, name) => {
   const findProduct = await productsModel.getProductById(id);
-  if (findProduct.length === 0) return { status: 404, message: 'Product not found' };
+  if (!findProduct) return { status: 404, message: 'Product not found' };
   await productsModel.updateProduct(id, name);
   return { status: 200, id, name };
 };
