@@ -6,9 +6,13 @@ const { validateProductToDelete } = require('../middlewares/validateProductToDel
 const router = express.Router();
 
 router.get('/:id', productsController.getProductById);
+
 router.get('/', productsController.getAllProducts);
+
 router.post('/', validateProductName, productsController.addNewProduct);
+
 router.put('/:id', validateProductName, productsController.updateProduct);
+
 router.delete('/:id', validateProductToDelete, productsController.deleteProduct);
 
 module.exports = router;
