@@ -1,4 +1,5 @@
 const productsModel = require('../models/productsModel');
+const salesModel = require('../models/salesModel');
 
 const validateProductId = (req, res, next) => {
   const { body } = req;
@@ -30,8 +31,18 @@ const validateProductQuantity = (req, res, next) => {
   next();
 };
 
+const validateIfSaleExist = async (req, res, next) => {
+  const { id } = req.params;
+  const product = await salesModel.getSaleById(id);
+  if (product.length === 0) {
+    return res.status(404).json({ message: 'Sale not found' });
+  }
+  next();
+};
+
 module.exports = {
   validateProductId,
   validateIfProductExist,
   validateProductQuantity,
+  validateIfSaleExist,
 };
