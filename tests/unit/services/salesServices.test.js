@@ -25,16 +25,25 @@ describe('Testes da camada Sales Service', function () {
       const result = await salesService.getSaleById();
       expect(result).to.be.a('object');
     });
-    // it('Verifica se retorna o produto encontrado', async function () {
-    //   sinon.stub(salesModel, 'getSaleById').resolves(saleFound);
-    //   const result = await salesService.getSaleById(2);
-    //   expect(result.product).to.deep.equal(saleFound);
-    // });
-    // it('Verifica se retorna mensagem de erro quando não encontra o produto', async function () {
-    //   sinon.stub(salesModel, 'getSaleById').resolves(saleNotFoundMessage);
-    //   const result = await salesService.getSaleById(3);
-    //   expect(result.product.message).to.deep.equal(saleNotFoundMessage.message);
-    // });
+    it('Verifica se retorna o produto encontrado', async function () {
+      const productFound = {
+        "status": 200,
+        "products": [
+          {
+            "id": 2,
+            "name": "Machado Leviatã"
+          },
+        ],
+      };
+      sinon.stub(salesModel, 'getSaleById').resolves(productFound);
+      const result = await salesService.getSaleById(1);
+      expect(result.sale).to.deep.equal(productFound);
+    });
+    it('Verifica se retorna mensagem de erro quando não encontra o produto', async function () {
+      sinon.stub(salesModel, 'getSaleById').resolves(saleNotFoundMessage);
+      const result = await salesService.getSaleById(3);
+      expect(result.sale.message).to.deep.equal(saleNotFoundMessage.message);
+    });
   });
   describe('Testa a função addNewSale', function () {
     afterEach(sinon.restore);
