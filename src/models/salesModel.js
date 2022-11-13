@@ -28,6 +28,7 @@ const addSalesProducts = async (product, insertId) => {
   const { productId, quantity } = product;
   const query = 'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES(?, ?, ?)';
   connection.execute(query, [insertId, productId, quantity]);
+  return true;
 };
 
 const addNewSale = async (sale) => {
@@ -66,6 +67,7 @@ module.exports = {
   getSaleById,
   addNewSale,
   addProductsSolds,
+  addSalesProducts,
   updateSale,
   deleteSale,
 };

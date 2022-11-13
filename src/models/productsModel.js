@@ -9,7 +9,6 @@ const getAllProducts = async () => {
 const getProductById = async (id) => {
   const query = 'SELECT * FROM products WHERE id = ?';
   const [[product]] = await connection.execute(query, [id]);
-  console.log(product);
   return product;
 };
 
@@ -34,7 +33,8 @@ const deleteProduct = async (id) => {
 const searchProducts = async (q) => {
   const search = `%${q}%`;
   const query = 'SELECT * FROM products WHERE name LIKE ?';
-  const [products] = await connection.execute(query, [search]);
+  const [[products]] = await connection.execute(query, [search]);
+  console.log(products);
   return products;
 };
   
