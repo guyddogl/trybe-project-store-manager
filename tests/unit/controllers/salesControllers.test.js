@@ -46,4 +46,39 @@ describe('Testes da camada Sales Controller', function () {
       expect(res.json).to.have.been.calledWith(saleNotFoundMessage);
     });
   });
+  describe('Testa a função addNewSale', function () {
+    afterEach(sinon.restore);
+    it('Verifica se o status do retorno é 201 e o novo produto é adicionado', async function () {
+      sinon.stub(salesService, 'addNewSale').resolves({
+        "status": 201,
+        "newSaleCreated": [
+          {
+            "productId": 1,
+            "quantity": 1
+          },
+          {
+            "productId": 2,
+            "quantity": 5
+          }
+        ]
+      });
+      const req = {
+        body: [
+          {
+            "productId": 1,
+            "quantity": 1
+          },
+          {
+            "productId": 2,
+            "quantity": 5
+          }
+        ]
+      };
+      const res = {};
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      await salesController.addNewSale(req, res);
+      expect(res.status).to.have.been.calledWith(201);
+    });
+  });
 });
