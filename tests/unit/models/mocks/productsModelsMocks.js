@@ -1,25 +1,17 @@
-const allProducts = {
-  "status": 200,
-  "products": [
-    {
-      "id": 1,
-      "name": "Lâminas do Caos"
-    },
-    {
-      "id": 2,
-      "name": "Machado Leviatã"
-    },
-  ],
-};
+const allProducts = [
+  {
+    "id": 1,
+    "name": "Lâminas do Caos"
+  },
+  {
+    "id": 2,
+    "name": "Machado Leviatã"
+  },
+];
 
 const productFound = {
-  "status": 200,
-  "products": [
-    {
-      "id": 2,
-      "name": "Machado Leviatã"
-    },
-  ],
+  "id": 2,
+  "name": "Machado Leviatã"
 };
 
 const productNotFoundMessage = { "message": "Product not found" };

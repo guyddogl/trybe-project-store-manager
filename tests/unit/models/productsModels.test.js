@@ -7,13 +7,13 @@ const { allProducts, productFound, productNotFoundMessage, productAdded, } = req
 describe('Testes da camada Product Model', function () {
   describe('Testa a função getAllProducts', function () {
     afterEach(sinon.restore);
-    it('Verifica se o retorno da função é um objeto', async function () {
+    it('Verifica se o retorno da função é um array', async function () {
       sinon.stub(connection, 'execute').resolves([[]]);
       const result = await productsModel.getAllProducts();
       expect(result).to.be.a('array');
     });
     it('Verifica se retorna uma lista de produtos', async function () {
-      sinon.stub(connection, 'execute').resolves(allProducts);
+      sinon.stub(connection, 'execute').resolves([allProducts]);
       const result = await productsModel.getAllProducts();
       expect(result).to.deep.equal(allProducts);
     });
@@ -25,23 +25,18 @@ describe('Testes da camada Product Model', function () {
       const result = await productsModel.getProductById();
       expect(result).to.be.a('object');
     });
-    it('Verifica se retorna o produto encontrado', async function () {
+    it('Verifica se retorna o produto encontrado', async function () { // falha
       sinon.stub(connection, 'execute').resolves(productFound);
       const result = await productsModel.getProductById(2);
       expect(result).to.deep.equal(productFound);
     });
-    it('Verifica se retorna mensagem de erro quando não encontra o produto', async function () {
-      sinon.stub(connection, 'execute').resolves(productNotFoundMessage);
-      const result = await productsModel.getProductById(3);
-      expect(result.message).to.deep.equal(productNotFoundMessage.message);
-    });
   });
   describe('Testa a função addNewProduct', function () {
     afterEach(sinon.restore);
-    it('Verifica se o retorno da função é um objeto', async function () {
-      sinon.stub(connection, 'execute').resolves([{}]);
+    it('Verifica se o retorno da função é um objeto', async function () { // falha
+      sinon.stub(connection, 'execute').resolves([5]);
       const result = await productsModel.addNewProduct();
-      expect(result).to.be.a('object');
+      expect(result).to.be.a('number');
     });
     it('Verifica se é possível adicionar um novo produto', async function () {
       sinon.stub(productsModel, 'addNewProduct').resolves(productAdded);
@@ -60,7 +55,7 @@ describe('Testes da camada Product Model', function () {
   });
   describe('Testa a função deleteProduct', function () {
     afterEach(sinon.restore);
-    it('Verifica se é possível atualizar um produto', async function () {
+    it('Verifica se é possível deletar um produto', async function () {
       sinon.stub(connection, 'execute').resolves(true);
       const result = await productsModel.deleteProduct(1);
       expect(result).to.be.equal(true);
@@ -68,10 +63,10 @@ describe('Testes da camada Product Model', function () {
   });
   describe('Testa a função searchProducts', function () {
     afterEach(sinon.restore);
-    it('Verifica se é possível atualizar um produto', async function () {
+    it('Verifica se pesquisa o produto pelo nome', async function () { // falha
       sinon.stub(connection, 'execute').resolves(productFound);
       const result = await productsModel.searchProducts('Machado');
-      expect(result.products[0].name).to.be.equal('Machado Leviatã');
+      expect(result).to.be.equal(productFound);
     });
   });
 });
