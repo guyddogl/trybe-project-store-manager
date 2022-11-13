@@ -70,12 +70,7 @@ describe('Testes da camada Sales Service', function () {
     afterEach(sinon.restore);
     it('Verifica se o retorno da função é um objeto', async function () {
       sinon.stub(salesModel, 'updateSale').resolves({});
-      const result = await salesService.updateSale(1);
-      expect(result).to.be.a('object');
-    });
-    it('Verifica se retorna erro ao tentar atualizar um produto que não existe', async function () {
-      sinon.stub(salesModel, 'updateSale').resolves({});
-      const result = await salesService.updateSale(5);
+      const result = await salesService.updateSale(1, []);
       expect(result).to.be.a('object');
     });
   });
